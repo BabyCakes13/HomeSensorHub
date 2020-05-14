@@ -8,9 +8,6 @@ import adafruit_bme680
 
 from sensors.sensor import Sensor
 
-logging.basicConfig(level=logging.INFO)
-
-
 class EnvironmentalSensor:
     I2C = busio.I2C(board.SCL, board.SDA)
     ADDRESSES = [0x77, 0x76]

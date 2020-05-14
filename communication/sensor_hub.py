@@ -1,11 +1,8 @@
-import logging
+import logging as lg
 import time
 
 from communication.data_sender import DataSender
 from sensors.environmental_sensor import EnvironmentalSensor
-
-logging.basicConfig(level=logging.INFO)
-
 
 class SensorHub:
     """
@@ -15,6 +12,7 @@ class SensorHub:
 
     def __init__(self):
         self.data = {}
+        self.logging = lg.getLogger(self.__class__.__name__)
 
         self.environmental_sensors = EnvironmentalSensor()
 
@@ -36,14 +34,14 @@ class SensorHub:
     def collect_all_data(self) -> None:
         # TODO Fix the multiple sensors data. When a sensor type has multiple sensors, it actually overwrites the last
         # value rather than having different values for different sensors
-        logging.info("Collecting all data...")
+        self.logging.info("Collecting all data...")
         for sensor in self.all_sensors:
             self.collect_data_from(sensor)
 
     def start_sniffin(self, interval):
         ds = DataSender()
 
-        logging.info("Started sniffin...")
+        self.logging.info("Started sniffin...")
         while True:
             self.collect_all_data()
             data = self.get_data()
